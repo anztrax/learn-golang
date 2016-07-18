@@ -2,7 +2,64 @@ package main
 
 import "fmt"
 
-func main() {
+func markSomething(){
+  var grade string = "Z";
+  var marks int = 90;
+
+  switch(marks){
+    case 90:
+      grade = "A";
+    case 80:
+      grade = "B";
+    case 50,60,70:
+      grade = "C";
+    default:
+      grade = "D";
+  }
+
+  //switch without variable to check ?
+  switch{
+    //the variable is checked at case section
+  case grade == "A":
+    fmt.Println("Excellent");
+  case grade == "B":
+    fmt.Println("Well Done");
+  case grade == "C":
+    fmt.Println("You Passed");
+  case grade == "D":
+    fmt.Println("You Passed Too ");
+  default:
+    fmt.Println("Invalid grade");
+  }
+
+  fmt.Printf("Your grade = %s\n",grade);
+}
+
+func checkIntefaceOfVariable(){
+  var x interface{}
+
+  switch i := x.(type){
+    case nil:
+      /**
+        %T <- a Go-syntax representation of the type of the value
+        %#v	<- a Go-syntax representation of the value
+      **/
+
+      fmt.Printf("type of x : %T\n",i);
+    case int:
+      fmt.Println("x is int");
+    case float64:
+      fmt.Println("x is float64");
+    case func(int) float64:
+      fmt.Println("x is func(int) return float64");
+    case bool, string:
+      fmt.Println("x is bool or string");
+    default:
+      fmt.Println("unknown type");
+  }
+}
+
+func printAndPlayVariable(){
   //variable decration & initialization
   var number1 int;
   number1 = 100;
@@ -13,6 +70,13 @@ func main() {
   //mixed variable
   var var1, var2, var3 = 3 , 10.56, "foo";
   total1 := var2 + number3;
+  bool1 := true;
+
+  const LENGTH int = 10;
+  const WIDTH int = 5;
+  area := LENGTH * WIDTH;
+  fmt.Println("Area : ",area);
+
 
   /*this is comment*/
   fmt.Println(number1);
@@ -21,4 +85,24 @@ func main() {
   fmt.Println("Total :",total1);
   fmt.Printf("testing\n")
   fmt.Printf("Hello world\n");
+
+  //this is if statement
+  if(area <= 50){
+    fmt.Println("area is less than or equals 50, that's not enough room for small studio");
+  }else{
+    fmt.Println("area is more than 50, that's enought room yo ");
+  }
+
+  if(var1 == 3 && bool1){
+    fmt.Println("var1 value == 3 && bool1 == true");
+    if(var2 == 10.56){
+      fmt.Println("var2 == 10.56");
+    }
+  }
+}
+
+func main() {
+  markSomething();
+  printAndPlayVariable();
+  checkIntefaceOfVariable();
 }
