@@ -59,6 +59,10 @@ func checkIntefaceOfVariable(){
   }
 }
 
+func howToUseSelectKeyword(){
+  fmt.Println("How to use Select keyword");
+}
+
 func printAndPlayVariable(){
   //variable decration & initialization
   var number1 int;
@@ -105,4 +109,5 @@ func main() {
   markSomething();
   printAndPlayVariable();
   checkIntefaceOfVariable();
+  howToUseSelectKeyword();
 }
