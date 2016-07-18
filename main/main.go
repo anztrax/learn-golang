@@ -59,6 +59,33 @@ func checkIntefaceOfVariable(){
   }
 }
 
+func tryLooping(){
+  var b int = 15;
+  var a int;
+
+  //this is array declaration & initialization
+  numbers := [6]int{1,2,3,4};
+
+  //for loop section
+  //this a scope is only at for statement
+  for a := 0; a < 10; a++ {
+    fmt.Printf("value of a : %d\n",a);
+  }
+  fmt.Println("==================================");
+
+  for a < b{
+    a++;
+    fmt.Printf("value of a : %d\n",a);
+  }
+  fmt.Println("==================================");
+
+  //place ( index, value )
+  for i, x:= range numbers{
+    fmt.Printf("the value of x = %d at %d\n",x,i);
+  }
+  fmt.Println("==================================");
+}
+
 func howToUseSelectKeyword(){
   var c1, c2 , c3 chan int;
   var i1, i2 int;
@@ -68,7 +95,7 @@ func howToUseSelectKeyword(){
       fmt.Printf("received ",i1,"from c1\n");
     case c2 <- i2:
       fmt.Printf("sent ",i2, " to c2\n");
-    case i3, ok:= (<-c3):
+    case i3, ok:= (<-c3): //like initialize 2 variable
       if(ok){
         fmt.Printf("recieved ",i3," from c3\n");
       }else{
@@ -126,4 +153,5 @@ func main() {
   printAndPlayVariable();
   checkIntefaceOfVariable();
   howToUseSelectKeyword();
+  tryLooping();
 }
