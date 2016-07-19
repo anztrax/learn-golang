@@ -84,12 +84,51 @@ func tryLooping(){
     fmt.Printf("the value of x = %d at %d\n",x,i);
   }
   fmt.Println("==================================");
-  findPrimeNumber();
+  findPrimeNumber(50);
+
+  var num1 int = 100;
+  var num2 int = 200;
+  maxResult := findMax(num1,num2);
+  fmt.Println("==================================");
+  fmt.Println("max result value : ",maxResult);
+
+  fragment1 := "ananta";
+  fragment2 := "andrew";
+
+  swappedVal1, swappedVal2 := swap("ananta","andrew");
+  fmt.Println("my name is : ", swappedVal1, swappedVal2);
+
+  fmt.Println("before swap : ",fragment1, fragment2);
+  swapCallByReference(&fragment1,&fragment2);
+  fmt.Println("after swap : ",fragment1, fragment2);
 }
 
-func findPrimeNumber(){
+//function return 2 values (call by value)
+func swap(x,y string)(string,string){
+  return y,x;
+}
+
+func swapCallByReference(x *string, y*string){
+  var temp string;
+  temp = *x;
+  *x = *y;
+  *y = temp;
+}
+
+//function with 1 return value
+func findMax(num1, num2 int) int{
+  var result int;
+  if(num1 < num2){
+    result = num1;
+  }else{
+    result = num2;
+  }
+  return result;
+}
+
+func findPrimeNumber(maxNumber int){
   var i,j int;
-  for i=2; i< 100;i++{
+  for i=2; i< maxNumber;i++{
     for j=2; j <= (i/j);j++{
       if(i%j == 0){
         break;
