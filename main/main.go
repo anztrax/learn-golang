@@ -1,6 +1,22 @@
 package main
 
-import "fmt"
+import (
+  "fmt"
+  "math"
+)
+
+//declare type
+type Circle struct{
+  x, y, radius float64
+}
+
+//define method for the Circle
+func(c *Circle) area() float64{
+  return math.Pi * c.radius * c.radius;
+}
+
+//end of the method
+//====================================
 
 func markSomething(){
   var grade string = "Z";
@@ -202,10 +218,38 @@ func printAndPlayVariable(){
   }
 }
 
+func tryFuncAsValueAndFunctionClosureAndMethod(){
+  getSquareRoot := func(x float64)float64{
+    return math.Sqrt(x);
+  }
+  fmt.Println("sqrt of 9 is : ",getSquareRoot(9));
+
+  nextNumber := getSequence();
+  fmt.Println("this is closure : ",nextNumber())
+  fmt.Println("this is closure : ",nextNumber())
+
+  nextNumber2 := getSequence();
+  fmt.Println("this is closure : ",nextNumber2())
+  fmt.Println("this is closure : ",nextNumber2())
+
+  newCircle := Circle{x:0, y:0, radius:5};
+  fmt.Printf("Circle area : %f\n",newCircle.area())
+}
+
+//closure
+func getSequence() func() int{
+  i := 0;
+  return func() int{
+    i += 1;
+    return i;
+  }
+}
+
 func main() {
   markSomething();
   printAndPlayVariable();
   checkIntefaceOfVariable();
   howToUseSelectKeyword();
   tryLooping();
+  tryFuncAsValueAndFunctionClosureAndMethod();
 }
