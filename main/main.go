@@ -84,6 +84,21 @@ func tryLooping(){
     fmt.Printf("the value of x = %d at %d\n",x,i);
   }
   fmt.Println("==================================");
+  findPrimeNumber();
+}
+
+func findPrimeNumber(){
+  var i,j int;
+  for i=2; i< 100;i++{
+    for j=2; j <= (i/j);j++{
+      if(i%j == 0){
+        break;
+      }
+    }
+    if(j > (i/j)){
+      fmt.Printf("%d is prime\n",i);
+    }
+  }
 }
 
 func howToUseSelectKeyword(){
