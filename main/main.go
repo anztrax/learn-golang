@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "math"
+  "strings"
 )
 
 //declare type
@@ -236,6 +237,39 @@ func tryFuncAsValueAndFunctionClosureAndMethod(){
   fmt.Printf("Circle area : %f\n",newCircle.area())
 }
 
+func playWithStringAndArray(){
+  var greeting = "Hello world";
+  var myName = []string{"andrew","ananta"};
+  for i:=0; i < len(greeting);i++{
+    fmt.Printf("%c : %x\n",greeting[i],greeting[i]);
+  }
+
+  fmt.Println("my name ",strings.Join(myName, " "));
+
+  //and play with array too
+  var queueSlotNameList [10] string;
+  queueSlotNameList[0] = "andrew";
+
+  //declaring and initialze it
+  var queueSlotNameList2 = [10]string{"crystal","kay","takeo","hideo"};
+  fmt.Println(queueSlotNameList2);
+  var balances = []float32{100.0,2.0,3.4,7.0,50.0};
+  balances[4] = 100;
+
+  salary1 := balances[4];
+  fmt.Println(salary1);
+
+  //raise employee salary by triple yeah :D
+  fmt.Println("yeah salary increases by 3 times\n================");
+  for i :=0; i < len(balances);i++{
+    balances[i] = balances[i] * 3;
+    fmt.Printf("balances[%d] = %f\n",i,balances[i]);
+  }
+  fmt.Println("=======================");
+
+  
+}
+
 //closure
 func getSequence() func() int{
   i := 0;
@@ -252,4 +286,5 @@ func main() {
   howToUseSelectKeyword();
   tryLooping();
   tryFuncAsValueAndFunctionClosureAndMethod();
+  playWithStringAndArray();
 }
