@@ -11,6 +11,13 @@ type Circle struct{
   x, y, radius float64
 }
 
+type Book struct{
+  title string
+  author string
+  subject string
+  book_id int
+}
+
 //define method for the Circle
 func(c *Circle) area() float64{
   return math.Pi * c.radius * c.radius;
@@ -267,7 +274,116 @@ func playWithStringAndArray(){
   }
   fmt.Println("=======================");
 
-  
+  //multi dimentional array
+  var multiDimentioanlArray [5][10] int;
+  multiDimentioanlArray[0][0] = 0;
+
+  var multiDimentionalArray2 = [3][4] int{
+    {0,0,0,0},
+    {0,0,0,0},
+    {0,0,0,0},    //this is a must yeah
+  };
+  fmt.Println(multiDimentionalArray2);
+  for i:=0; i < len(multiDimentionalArray2);i++{
+    for j:=0; j < len(multiDimentionalArray2[i]);j++{
+      fmt.Printf("%d",multiDimentionalArray2[i][j]);
+    }
+    fmt.Println();
+  }
+
+  fmt.Println("the avarage of 10,20,30,40 : ",getAverage([]uint64{10,20,30,40}));
+
+  //pointers
+  var number1 = 100;
+  var float1 = 100.0;
+  var ip *int;
+  var fp *float64;
+  ip = &number1;
+  fp = &float1;
+  fmt.Printf("number1 value : %d (address : %d) \n, number2 value : %f (address : %d) \n",*ip,ip,*fp,fp);
+
+  //array of pointer
+  var arrayOfNumber = [3]int{10,20,30};
+  var arrayOfPtr [3]*int;
+  for i:=0;i < len(arrayOfNumber);i++{
+    arrayOfPtr[i] = &arrayOfNumber[i];
+  }
+
+  //if we change the pointer this will changes
+  *arrayOfPtr[0] = 100;
+  for i:=0; i < len(arrayOfPtr);i++{
+    fmt.Println("array of the pointer :",*arrayOfPtr[i]);
+  }
+
+  //pointer of pointer become make sense now :)
+  var ptr1 *int;
+  var pptr1 **int;
+  var pptr2 ***int;
+
+  ptr1 = &number1;
+  pptr1 = &ptr1;
+  pptr2 = &pptr1;
+  fmt.Println("========= pointer stuff ==============");
+  fmt.Printf("value of number1 : %d\n",number1);
+  fmt.Printf("value of ptr1 : %d (address : %d)\n",*ptr1,ptr1);
+  fmt.Printf("value of pptr1 : %d\n",**pptr1);
+  fmt.Printf("value of pptr2 : %d\n",***pptr2);
+
+  var intPtr *int;
+  if(intPtr == nil){
+    fmt.Println("this intPtr is not inialized yet");
+  }
+
+  var arrayOfNumbers = make([]int,3,5); //this make method is make array with parameter (length & capacity)
+  arrayOfNumbers[2] = 10;
+  printSlices(arrayOfNumbers);
+}
+
+func printSlices(anArray []int){
+  fmt.Printf("len = %d , cap = %d , slice : %v \n",len(anArray),cap(anArray),anArray);
+}
+
+func playWithStruct(){
+  var book1 Book;
+  book1.title = "Go Programming";
+  book1.author = "S Kumar";
+  book1.subject = "Programming"
+  book1.book_id = 1;
+
+  var book2 Book;
+  book2.title = "C++ Programming";
+  book2.author = "Daniel M Ritchie";
+  book2.subject = "Programming"
+  book2.book_id = 2;
+
+  //temp struct pointer;
+  changeBookSubject(&book1,"Fun");
+  changeBookSubject(&book2,"This is Fun");
+
+  printBookDetail(book1);
+  printBookDetail(book2);
+}
+
+
+func printBookDetail(book Book){
+  fmt.Println("=====================");
+  fmt.Println("Book title : ",book.title);
+  fmt.Println("Book author : ",book.author);
+  fmt.Println("Book subject : ",book.subject);
+  fmt.Println("Book id : ",book.book_id);
+}
+
+func changeBookSubject(book *Book,subject string){
+  book.subject = subject;
+}
+
+func getAverage(arr []uint64) float32{
+  var sum uint64;
+  var lenOfArray = len(arr);
+  for i:=0;i < lenOfArray;i++{
+    sum += arr[i];
+  }
+  return float32(sum / uint64(lenOfArray));
 }
 
 //closure
@@ -287,4 +403,5 @@ func main() {
   tryLooping();
   tryFuncAsValueAndFunctionClosureAndMethod();
   playWithStringAndArray();
+  playWithStruct();
 }
