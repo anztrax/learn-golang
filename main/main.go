@@ -5,6 +5,8 @@ import (
   "math"
   "strings"
 )
+//you can import package using single statement
+import "errors"
 
 //declare type
 type Circle struct{
@@ -17,6 +19,16 @@ type Book struct{
   subject string
   book_id int
 }
+
+type Shape interface{
+  area1() float64;
+}
+
+type Rectangle struct{
+  width, height float64;
+}
+
+
 
 //define method for the Circle
 func(c *Circle) area() float64{
@@ -444,6 +456,53 @@ func getSequence() func() int{
   }
 }
 
+func findFactorial(i int)int{
+  if( i <= 1){
+    return 1;
+  }
+  return i * findFactorial(i -1);
+}
+
+func recursiveExample(){
+  fmt.Println("10 ! " ,findFactorial(10));
+}
+
+func testInterface(){
+  circle1 := Circle{x :0, y:0, radius: 10};
+  rectangle1 := Rectangle{width : 100,height : 100};
+  fmt.Printf("circle area : %f\n",getArea(circle1))
+  fmt.Printf("rectangle area : %f\n",getArea(rectangle1))
+
+  sqrtResult, sqrtResultErr := calculateSqrt(-1);
+  if(sqrtResultErr != nil){
+    fmt.Println("err : ",sqrtResultErr);
+  }else{
+    fmt.Println("result : ",sqrtResult);
+  }
+}
+
+func calculateSqrt(value float64)(float64,error){
+  if(value < 0){
+    return 0, errors.New("Math : negative number can't passed to Sqrt");
+  }
+
+  return math.Sqrt(value), nil;
+}
+
+
+//inteface method
+func (circle Circle) area1() float64{
+  return math.Pi * circle.radius * circle.radius;
+}
+func (rect Rectangle) area1() float64{
+  return rect.width * rect.height;
+}
+
+func getArea(shape Shape) float64{
+  return shape.area1();
+}
+
+
 func main() {
   markSomething();
   printAndPlayVariable();
@@ -454,4 +513,6 @@ func main() {
   playWithStruct();
   playWithStringAndArray();
   tryAndExperimentWithSliceAndRange();
+  recursiveExample();
+  testInterface();
 }
