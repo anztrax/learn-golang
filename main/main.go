@@ -546,7 +546,7 @@ func testFuncFeatures(){
 //type for save func(n int)
 type FuncWith1IntParam func(n int);
 
-func tryGoroutinesAndChannels(){
+func tryGoroutines(){
   f := func(n int){
     for i :=0;i < 10;i++{
       fmt.Println(n, " : ",i);
@@ -578,6 +578,99 @@ func tryGoroutinesAndChannels(){
   fmt.Scanln(&input);
 }
 
+
+func tryChannel(){
+  //note :  A bi-directional channel can be passed to a function that takes send-only or receive-only channels
+  //c chan string <- is bi-directional
+
+  //if you try to c in this channel you'll get
+  // invalid operation: <-c (receive from send-only type chan<- string)
+  pinger := func(c chan<- string){  //sender to channel
+    for i:=0; ;i++{
+      c <- "Ping";
+    }
+  }
+  ponger := func(c chan<- string){  //sender to channel
+    for i:=0; ;i++{
+      c <- "Pong"
+    }
+  }
+
+  printer := func(c <-chan string){ //channel reciever
+    for {
+      msg := <- c;
+      fmt.Println(msg);
+      time.Sleep(time.Second *1)
+    }
+  }
+
+  localMain := func(){
+    innerLocalMain1 := func(){
+      //channel string
+      var c chan string = make(chan string);
+
+      //this is required the same channel communcation
+      go pinger(c);
+      go printer(c);
+      go ponger(c);
+      // var input string;
+      // fmt.Scanln(&input);
+    }
+    innerLocalMain2 := func(){
+      c1 := make(chan string);
+      c2 := make(chan string);
+
+      //this is buffered channel
+      //note : This creates a buffered channel with a capacity of 1.
+      //Normally channels are synchronous;
+      //both sides of the channel will wait until the other side is ready.
+      // A buffered channel is asynchronous;
+      // sending or receiving a message will not wait unless the channel is already full.
+      // c3 := make(chan int,1);
+
+      go func(){
+        for{
+          c1 <- "from channel 1";
+          time.Sleep(time.Second * 2);
+        }
+      }();
+
+      go func(){
+        for{
+          c2 <- "from channel 2";
+          time.Sleep(time.Second * 3);
+        }
+      }();
+
+      //using select <- is like switch for statement
+      go func(){
+        for{
+          //if this channel is ready
+          select{
+            case msg1 := <- c1:
+              fmt.Println(msg1);
+            case msg2 := <- c2:
+              fmt.Println(msg2);
+            // case <- time.After(time.Second):
+            //   fmt.Println("timeout");
+            // default:
+            //   fmt.Println("nothing ready");
+          }
+        }
+      }();
+
+      //this is blocking statement ? , why
+      var input string
+      fmt.Scanln(&input)
+    }
+    innerLocalMain1();
+    innerLocalMain2();
+  }
+
+
+  localMain();
+}
+
 func main() {
   markSomething();
   printAndPlayVariable();
@@ -591,5 +684,8 @@ func main() {
   recursiveExample();
   testInterface();
   testFuncFeatures();
-  tryGoroutinesAndChannels();
+
+  //this method is used to try goroutines
+  // tryGoroutines();
+  tryChannel();
 }
