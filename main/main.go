@@ -334,13 +334,62 @@ func playWithStringAndArray(){
     fmt.Println("this intPtr is not inialized yet");
   }
 
-  var arrayOfNumbers = make([]int,3,5); //this make method is make array with parameter (length & capacity)
-  arrayOfNumbers[2] = 10;
-  printSlices(arrayOfNumbers);
 }
 
 func printSlices(anArray []int){
   fmt.Printf("len = %d , cap = %d , slice : %v \n",len(anArray),cap(anArray),anArray);
+}
+
+func tryAndExperimentWithSliceAndRange(){
+  var arrayOfNumbers = make([]int,3,5); //this make method is make array with parameter (length & capacity)
+  arrayOfNumbers[2] = 10;
+  printSlices(arrayOfNumbers);
+
+  var nilNumbers []int;
+  if(nilNumbers == nil){
+    fmt.Println("Slice is nil");
+  }
+
+  numbers := []int{0,1,2,3,4,5,6};
+  fmt.Println("numbers[1:4]",numbers[1:4]);
+  fmt.Println("numbers[1:]",numbers[1:]);
+  fmt.Println("numbers[:4]",numbers[:4]);
+
+  fmt.Println("cap =",cap(numbers), "len =",len(numbers));
+  numbers2 := append(numbers,1);
+  fmt.Println("numbers2 : ",numbers2);
+
+  //using range
+  for i := range numbers2{
+    fmt.Println("index : ",i," is : ",numbers2[i]);
+  }
+
+  //define map and loop into it
+  gundamAndUserList := map[string]string{"a" : "zaku", "b" : "gundam strike", "c": "gundam buster"};
+
+  fmt.Println("===============================");
+  for player,gundam := range gundamAndUserList{
+    fmt.Println("user : ",player," gundam name : ",gundam);
+  }
+  gundamAndUserList["d"] = "zeong";
+
+  fmt.Println("===============================");
+  playerA, ok := gundamAndUserList["c"];
+  if(!ok){
+    fmt.Println("player C is not exist");
+  }else{
+    fmt.Println("player C is exist, the gundam is : ",playerA);
+  }
+
+  //for deleting map data
+  delete(gundamAndUserList,"d");
+  fmt.Println("===============================");
+  playerD, ok := gundamAndUserList["d"];
+  if(!ok){
+    fmt.Println("player D is not exists");
+  }else{
+    fmt.Println(playerD," is still there");
+  }
 }
 
 func playWithStruct(){
@@ -402,6 +451,7 @@ func main() {
   howToUseSelectKeyword();
   tryLooping();
   tryFuncAsValueAndFunctionClosureAndMethod();
-  playWithStringAndArray();
   playWithStruct();
+  playWithStringAndArray();
+  tryAndExperimentWithSliceAndRange();
 }
