@@ -529,6 +529,12 @@ func testFuncFeatures(){
     second(); //this will be execute first
   }
 
+  defer func(){
+    str := recover();
+    fmt.Println("panic cause : ",str);
+  }();  //this method is immediately running but will be execute later because of defer thing ?
+  panic("PANIC");
+
   testDeferFeature();
 }
 
