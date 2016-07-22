@@ -254,6 +254,9 @@ func tryFuncAsValueAndFunctionClosureAndMethod(){
 
   newCircle := Circle{x:0, y:0, radius:5};
   fmt.Printf("Circle area : %f\n",newCircle.area())
+
+  variadicTotal := addValueWithVariadic(10,20,40,50);
+  fmt.Printf("variadic add total : %d\n",variadicTotal);
 }
 
 func playWithStringAndArray(){
@@ -481,6 +484,16 @@ func testInterface(){
   }
 }
 
+//test variadic function
+func addValueWithVariadic(args ... int) int{
+  total := 0;
+  for _, v := range args{
+    total += v;
+  }
+
+  return total;
+}
+
 func calculateSqrt(value float64)(float64,error){
   if(value < 0){
     return 0, errors.New("Math : negative number can't passed to Sqrt");
@@ -502,6 +515,22 @@ func getArea(shape Shape) float64{
   return shape.area1();
 }
 
+func testFuncFeatures(){
+  first := func(){
+    fmt.Println("1st");
+  }
+
+  second := func(){
+    fmt.Println("2nd");
+  }
+
+  testDeferFeature := func(){
+    defer first();
+    second(); //this will be execute first
+  }
+
+  testDeferFeature();
+}
 
 func main() {
   markSomething();
@@ -515,4 +544,5 @@ func main() {
   tryAndExperimentWithSliceAndRange();
   recursiveExample();
   testInterface();
+  testFuncFeatures();
 }
