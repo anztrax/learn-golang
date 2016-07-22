@@ -324,6 +324,9 @@ func playWithStringAndArray(){
     arrayOfPtr[i] = &arrayOfNumber[i];
   }
 
+  xPtr := new(int);
+  fmt.Println("xptr : ",xPtr);
+
   //if we change the pointer this will changes
   *arrayOfPtr[0] = 100;
   for i:=0; i < len(arrayOfPtr);i++{
@@ -538,6 +541,28 @@ func testFuncFeatures(){
   testDeferFeature();
 }
 
+func tryGoroutinesAndChannels(){
+  f := func(n int){
+    for i :=0;i < 10;i++{
+      fmt.Println(n, " : ",i);
+    }
+  }
+  // go f(0);
+
+  f2 := func(){
+    for i:=0; i< 10;i++{
+      go f(i);
+    }
+  }
+
+  //run the go routines
+  f2();
+
+  //without the scanln , the program will be close immediately and f() will not printed
+  var input string;
+  fmt.Scanln(&input);
+}
+
 func main() {
   markSomething();
   printAndPlayVariable();
@@ -551,4 +576,5 @@ func main() {
   recursiveExample();
   testInterface();
   testFuncFeatures();
+  tryGoroutinesAndChannels();
 }
