@@ -4,6 +4,8 @@ import (
   "fmt"
   "math"
   "strings"
+  "time"
+  "math/rand"
 )
 //you can import package using single statement
 import "errors"
@@ -541,22 +543,35 @@ func testFuncFeatures(){
   testDeferFeature();
 }
 
+//type for save func(n int)
+type FuncWith1IntParam func(n int);
+
 func tryGoroutinesAndChannels(){
   f := func(n int){
     for i :=0;i < 10;i++{
       fmt.Println(n, " : ",i);
     }
   }
-  // go f(0);
+  go f(0);
 
-  f2 := func(){
+  f2 := func(aFunc func(n int)){
     for i:=0; i< 10;i++{
-      go f(i);
+      go aFunc(i);
     }
   }
 
   //run the go routines
-  f2();
+  f2(f);
+
+  f3 := func(n int){
+    for i:=0;i < 10; i++{
+      fmt.Println(n, " : ",i);
+      amt := time.Duration(rand.Intn(250))
+      time.Sleep(time.Millisecond * amt);
+    }
+  }
+  f2(f3);
+
 
   //without the scanln , the program will be close immediately and f() will not printed
   var input string;
