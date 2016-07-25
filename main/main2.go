@@ -4,6 +4,7 @@ import (
 	"container/list"
 	"errors"
 	"fmt"
+	"hash/crc32"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -155,9 +156,34 @@ func tryContainerAndSort() {
 	fmt.Println(kids)
 }
 
+func hashAndCryptography() {
+	getHash := func(filename string) (uint32, error) {
+		bs, err := ioutil.ReadFile(filename) //bs = bytearray
+		if err != nil {
+			return 0, err
+		}
+
+		//crc32 is used to compare 2 file  it's highly likely (though not 100% certain) that the files are the same.
+		h := crc32.NewIEEE()
+		h.Write(bs)
+		return h.Sum32(), nil //v value is uint32
+	}
+
+	h1, err := getHash("test3.txt")
+	if err != nil {
+		return
+	}
+	h2, err := getHash("test.txt")
+	if err != nil {
+		return
+	}
+	fmt.Println(h1, h2, h1 == h2)
+}
+
 func main() {
 	trystringsPackage()
 	tryosPackage()
 	tryError()
 	tryContainerAndSort()
+	hashAndCryptography()
 }
