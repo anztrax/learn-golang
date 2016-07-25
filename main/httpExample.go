@@ -29,4 +29,13 @@ func hello(res http.ResponseWriter, req *http.Request) {
 func main() {
 	http.HandleFunc("/hello", hello)
 	http.ListenAndServe(":9099", nil)
+
+	//handle file server
+	http.Handle(
+		"/assets/",
+		http.StripPrefix(
+			"/assets/",
+			http.FileServer(http.Dir("dummyDirectory")),
+		),
+	)
 }
