@@ -2,6 +2,7 @@ package main
 
 import (
 	"container/list"
+	"crypto/sha1"
 	"errors"
 	"fmt"
 	"hash/crc32"
@@ -168,6 +169,15 @@ func hashAndCryptography() {
 		h.Write(bs)
 		return h.Sum32(), nil //v value is uint32
 	}
+
+	tryCryptoSha1 := func() {
+		h := sha1.New()
+		h.Write([]byte("Test"))
+		bs := h.Sum([]byte{}) //return 160 bit number , but sliced into 20 byte
+		fmt.Println("result crypto : ", bs)
+	}
+
+	tryCryptoSha1()
 
 	h1, err := getHash("test3.txt")
 	if err != nil {
