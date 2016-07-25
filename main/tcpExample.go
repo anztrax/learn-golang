@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/gob" //go binary format ?
+	"encoding/gob" //go binary format ?  , there are json / mongo bson
 	"fmt"
 	"net" //network
 )
